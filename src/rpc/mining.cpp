@@ -125,12 +125,9 @@ UniValue getnetworksolps(const UniValue& params, bool fHelp)
 
 UniValue getnetworkhashps(const UniValue& params, bool fHelp)
 {
-    if (!fEnableGetNetworkHashPS || fHelp || params.size() > 2)
+    if (fHelp || params.size() > 2)
         throw runtime_error(
             "getnetworkhashps ( blocks height )\n"
-            + Deprecated(fEnableGetNetworkHashPS,
-                         "getnetworkhashps",
-                         "Please use getnetworksolps instead.") +
             "\nReturns the estimated network solutions per second based on the last n blocks.\n"
             "Pass in [blocks] to override # of blocks, -1 specifies over difficulty averaging window.\n"
             "Pass in [height] to estimate the network speed at the time when a certain block was found.\n"
