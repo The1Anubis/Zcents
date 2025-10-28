@@ -452,15 +452,12 @@ UniValue getrawmempool(const UniValue& params, bool fHelp)
 // insightexplorer
 UniValue getblockdeltas(const UniValue& params, bool fHelp)
 {
-    std::string disabledMsg = "";
-    if (!(fExperimentalInsightExplorer || fExperimentalLightWalletd)) {
-        disabledMsg = experimentalDisabledHelpMsg("getblockdeltas", {"insightexplorer", "lightwalletd"});
-    }
     if (fHelp || params.size() != 1)
         throw runtime_error(
             "getblockdeltas \"blockhash\"\n"
             "\nReturns information about the given block and its transactions.\n"
-            + disabledMsg +
+            "\nRequires that address indexing be enabled when starting zcashd (pass\n"
+            "-insightexplorer or -lightwalletd).\n"
             "\nArguments:\n"
             "1. \"hash\"          (string, required) The block hash\n"
             "\nResult:\n"
@@ -507,11 +504,6 @@ UniValue getblockdeltas(const UniValue& params, bool fHelp)
             + HelpExampleRpc("getblockdeltas", "\"00227e566682aebd6a7a5b772c96d7a999cadaebeaf1ce96f4191a3aad58b00b\"")
         );
 
-    if (!(fExperimentalInsightExplorer || fExperimentalLightWalletd)) {
-        throw JSONRPCError(RPC_MISC_ERROR, "Error: getblockdeltas is disabled. "
-            "Run './zcash-cli help getblockdeltas' for instructions on how to enable this feature.");
-    }
-
     std::string strHash = params[0].get_str();
     uint256 hash(uint256S(strHash));
 
@@ -535,16 +527,13 @@ UniValue getblockdeltas(const UniValue& params, bool fHelp)
 // insightexplorer
 UniValue getblockhashes(const UniValue& params, bool fHelp)
 {
-    std::string disabledMsg = "";
-    if (!(fExperimentalInsightExplorer || fExperimentalLightWalletd)) {
-        disabledMsg = experimentalDisabledHelpMsg("getblockhashes", {"insightexplorer", "lightwalletd"});
-    }
     if (fHelp || params.size() < 2)
         throw runtime_error(
             "getblockhashes high low ( {\"noOrphans\": true|false, \"logicalTimes\": true|false} )\n"
             "\nReturns array of hashes of blocks within the timestamp range provided,\n"
             "\ngreater or equal to low, less than high.\n"
-            + disabledMsg +
+            "\nRequires that the timestamp index be enabled when starting zcashd (pass\n"
+            "-insightexplorer or -lightwalletd).\n"
             "\nArguments:\n"
             "1. high                            (numeric, required) The newer block timestamp\n"
             "2. low                             (numeric, required) The older block timestamp\n"
@@ -569,11 +558,6 @@ UniValue getblockhashes(const UniValue& params, bool fHelp)
             + HelpExampleRpc("getblockhashes", "1558141697, 1558141576")
             + HelpExampleCli("getblockhashes", "1558141697 1558141576 '{\"noOrphans\":false, \"logicalTimes\":true}'")
             );
-
-    if (!(fExperimentalInsightExplorer || fExperimentalLightWalletd)) {
-        throw JSONRPCError(RPC_MISC_ERROR, "Error: getblockhashes is disabled. "
-            "Run './zcash-cli help getblockhashes' for instructions on how to enable this feature.");
-    }
 
     unsigned int high = params[0].get_int();
     unsigned int low = params[1].get_int();
@@ -1456,17 +1440,14 @@ UniValue z_gettreestate(const UniValue& params, bool fHelp)
 
 UniValue z_getsubtreesbyindex(const UniValue& params, bool fHelp)
 {
-    std::string disabledMsg = "";
-    if (!fExperimentalLightWalletd) {
-        disabledMsg = experimentalDisabledHelpMsg("z_getsubtreesbyindex", {"lightwalletd"});
-    }
     if (fHelp || params.size() < 2 || params.size() > 3) {
         auto strHeight = strprintf("%d", libzcash::TRACKED_SUBTREE_HEIGHT);
         throw runtime_error(
             "z_getsubtreesbyindex \"pool\" start_index ( limit )\n"
             "Returns roots of subtrees of the given pool's note commitment tree. Each value returned\n"
             "in the `subtrees` field is the Merkle root of a subtree containing 2^"+strHeight+" leaves.\n"
-            + disabledMsg +
+            "\nRequires that lightwalletd indexing be enabled when starting zcashd (pass\n"
+            "-lightwalletd).\n"
             "\nArguments:\n"
             "1. \"pool\"        (string, required) The pool from which subtrees should be returned. Either \"sapling\" or \"orchard\".\n"
             "2. start_index   (numeric, required) The index of the first 2^"+strHeight+"-leaf subtree to return.\n"
@@ -1486,11 +1467,6 @@ UniValue z_getsubtreesbyindex(const UniValue& params, bool fHelp)
             + HelpExampleCli("z_getsubtreesbyindex", "\"sapling\", 0")
             + HelpExampleRpc("z_getsubtreesbyindex", "\"orchard\", 3, 7")
         );
-    }
-
-    if (!fExperimentalLightWalletd) {
-        throw JSONRPCError(RPC_MISC_ERROR, "Error: z_getsubtreesbyindex is disabled. "
-            "Run './zcash-cli help z_getsubtreesbyindex' for instructions on how to enable this feature.");
     }
 
     auto strPool = params[0].get_str();

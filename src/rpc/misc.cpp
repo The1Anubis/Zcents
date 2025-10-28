@@ -636,15 +636,12 @@ static bool getAddressesFromParams(
 // insightexplorer
 UniValue getaddressmempool(const UniValue& params, bool fHelp)
 {
-    std::string disabledMsg = "";
-    if (!(fExperimentalInsightExplorer || fExperimentalLightWalletd)) {
-        disabledMsg = experimentalDisabledHelpMsg("getaddressmempool", {"insightexplorer", "lightwalletd"});
-    }
     if (fHelp || params.size() != 1)
         throw runtime_error(
             "getaddressmempool {\"addresses\": [\"taddr\", ...]}\n"
             "\nReturns all mempool deltas for an address.\n"
-            + disabledMsg +
+            "\nRequires that address indexing be enabled when starting zcashd (pass\n"
+            "-insightexplorer or -lightwalletd).\n"
             "\nArguments:\n"
             "{\n"
             "  \"addresses\":\n"
@@ -671,11 +668,6 @@ UniValue getaddressmempool(const UniValue& params, bool fHelp)
             + HelpExampleCli("getaddressmempool", "'{\"addresses\": [\"tmYXBYJj1K7vhejSec5osXK2QsGa5MTisUQ\"]}'")
             + HelpExampleRpc("getaddressmempool", "{\"addresses\": [\"tmYXBYJj1K7vhejSec5osXK2QsGa5MTisUQ\"]}")
         );
-
-    if (!(fExperimentalInsightExplorer || fExperimentalLightWalletd)) {
-        throw JSONRPCError(RPC_MISC_ERROR, "Error: getaddressmempool is disabled. "
-            "Run './zcash-cli help getaddressmempool' for instructions on how to enable this feature.");
-    }
 
     std::vector<std::pair<uint160, int>> addresses;
 
@@ -715,15 +707,12 @@ UniValue getaddressmempool(const UniValue& params, bool fHelp)
 // insightexplorer
 UniValue getaddressutxos(const UniValue& params, bool fHelp)
 {
-    std::string disabledMsg = "";
-    if (!(fExperimentalInsightExplorer || fExperimentalLightWalletd)) {
-        disabledMsg = experimentalDisabledHelpMsg("getaddressutxos", {"insightexplorer", "lightwalletd"});
-    }
     if (fHelp || params.size() != 1)
         throw runtime_error(
             "getaddressutxos {\"addresses\": [\"taddr\", ...], (\"chainInfo\": true|false)}\n"
             "\nReturns all unspent outputs for an address.\n"
-            + disabledMsg +
+            "\nRequires that address indexing be enabled when starting zcashd (pass\n"
+            "-insightexplorer or -lightwalletd).\n"
             "\nArguments:\n"
             "{\n"
             "  \"addresses\":\n"
@@ -766,11 +755,6 @@ UniValue getaddressutxos(const UniValue& params, bool fHelp)
             + HelpExampleCli("getaddressutxos", "'{\"addresses\": [\"tmYXBYJj1K7vhejSec5osXK2QsGa5MTisUQ\"], \"chainInfo\": true}'")
             + HelpExampleRpc("getaddressutxos", "{\"addresses\": [\"tmYXBYJj1K7vhejSec5osXK2QsGa5MTisUQ\"], \"chainInfo\": true}")
             );
-
-    if (!(fExperimentalInsightExplorer || fExperimentalLightWalletd)) {
-        throw JSONRPCError(RPC_MISC_ERROR, "Error: getaddressutxos is disabled. "
-            "Run './zcash-cli help getaddressutxos' for instructions on how to enable this feature.");
-    }
 
     bool includeChainInfo = false;
     if (params[0].isObject()) {
@@ -880,10 +864,6 @@ static void getAddressesInHeightRange(
 // insightexplorer
 UniValue getaddressdeltas(const UniValue& params, bool fHelp)
 {
-    std::string disabledMsg = "";
-    if (!(fExperimentalInsightExplorer || fExperimentalLightWalletd)) {
-        disabledMsg = experimentalDisabledHelpMsg("getaddressdeltas", {"insightexplorer", "lightwalletd"});
-    }
     if (fHelp || params.size() != 1)
         throw runtime_error(
             "getaddressdeltas {\"addresses\": [\"taddr\", ...], (\"start\": n), (\"end\": n), (\"chainInfo\": true|false)}\n"
@@ -893,7 +873,8 @@ UniValue getaddressdeltas(const UniValue& params, bool fHelp)
             "\nIf start or end are not specified, they default to zero."
             "\nIf start is greater than the latest block height, it's interpreted as that height.\n"
             "\nIf end is zero, it's interpreted as the latest block height.\n"
-            + disabledMsg +
+            "\nRequires that address indexing be enabled when starting zcashd (pass\n"
+            "-insightexplorer or -lightwalletd).\n"
             "\nArguments:\n"
             "{\n"
             "  \"addresses\":\n"
@@ -944,11 +925,6 @@ UniValue getaddressdeltas(const UniValue& params, bool fHelp)
             + HelpExampleCli("getaddressdeltas", "'{\"addresses\": [\"tmYXBYJj1K7vhejSec5osXK2QsGa5MTisUQ\"], \"start\": 1000, \"end\": 2000, \"chainInfo\": true}'")
             + HelpExampleRpc("getaddressdeltas", "{\"addresses\": [\"tmYXBYJj1K7vhejSec5osXK2QsGa5MTisUQ\"], \"start\": 1000, \"end\": 2000, \"chainInfo\": true}")
         );
-
-    if (!(fExperimentalInsightExplorer || fExperimentalLightWalletd)) {
-        throw JSONRPCError(RPC_MISC_ERROR, "Error: getaddressdeltas is disabled. "
-            "Run './zcash-cli help getaddressdeltas' for instructions on how to enable this feature.");
-    }
 
     int start = 0;
     int end = 0;
@@ -1012,15 +988,12 @@ UniValue getaddressdeltas(const UniValue& params, bool fHelp)
 // insightexplorer
 UniValue getaddressbalance(const UniValue& params, bool fHelp)
 {
-    std::string disabledMsg = "";
-    if (!(fExperimentalInsightExplorer || fExperimentalLightWalletd)) {
-        disabledMsg = experimentalDisabledHelpMsg("getaddressbalance", {"insightexplorer", "lightwalletd"});
-    }
     if (fHelp || params.size() != 1)
         throw runtime_error(
             "getaddressbalance {\"addresses\": [\"taddr\", ...]}\n"
             "\nReturns the balance for addresses.\n"
-            + disabledMsg +
+            "\nRequires that address indexing be enabled when starting zcashd (pass\n"
+            "-insightexplorer or -lightwalletd).\n"
             "\nArguments:\n"
             "{\n"
             "  \"addresses\":\n"
@@ -1040,11 +1013,6 @@ UniValue getaddressbalance(const UniValue& params, bool fHelp)
             + HelpExampleCli("getaddressbalance", "'{\"addresses\": [\"tmYXBYJj1K7vhejSec5osXK2QsGa5MTisUQ\"]}'")
             + HelpExampleRpc("getaddressbalance", "{\"addresses\": [\"tmYXBYJj1K7vhejSec5osXK2QsGa5MTisUQ\"]}")
         );
-
-    if (!(fExperimentalInsightExplorer || fExperimentalLightWalletd)) {
-        throw JSONRPCError(RPC_MISC_ERROR, "Error: getaddressbalance is disabled. "
-            "Run './zcash-cli help getaddressbalance' for instructions on how to enable this feature.");
-    }
 
     std::vector<std::pair<uint160, int>> addresses;
     std::vector<std::pair<CAddressIndexKey, CAmount>> addressIndex;
@@ -1069,10 +1037,6 @@ UniValue getaddressbalance(const UniValue& params, bool fHelp)
 // insightexplorer
 UniValue getaddresstxids(const UniValue& params, bool fHelp)
 {
-    std::string disabledMsg = "";
-    if (!(fExperimentalInsightExplorer || fExperimentalLightWalletd)) {
-        disabledMsg = experimentalDisabledHelpMsg("getaddresstxids", {"insightexplorer", "lightwalletd"});
-    }
     if (fHelp || params.size() != 1)
         throw runtime_error(
             "getaddresstxids {\"addresses\": [\"taddr\", ...], (\"start\": n), (\"end\": n)}\n"
@@ -1084,7 +1048,8 @@ UniValue getaddresstxids(const UniValue& params, bool fHelp)
             "\nThe returned txids are in the order they appear in blocks, which"
             "\nensures that they are topologically sorted (i.e. parent txids"
             "\nappear before child txids).\n"
-            + disabledMsg +
+            "\nRequires that address indexing be enabled when starting zcashd (pass\n"
+            "-insightexplorer or -lightwalletd).\n"
             "\nArguments:\n"
             "{\n"
             "  \"addresses\":\n"
@@ -1106,11 +1071,6 @@ UniValue getaddresstxids(const UniValue& params, bool fHelp)
             + HelpExampleCli("getaddresstxids", "'{\"addresses\": [\"tmYXBYJj1K7vhejSec5osXK2QsGa5MTisUQ\"], \"start\": 1000, \"end\": 2000}'")
             + HelpExampleRpc("getaddresstxids", "{\"addresses\": [\"tmYXBYJj1K7vhejSec5osXK2QsGa5MTisUQ\"], \"start\": 1000, \"end\": 2000}")
         );
-
-    if (!(fExperimentalInsightExplorer || fExperimentalLightWalletd)) {
-        throw JSONRPCError(RPC_MISC_ERROR, "Error: getaddresstxids is disabled. "
-            "Run './zcash-cli help getaddresstxids' for instructions on how to enable this feature.");
-    }
 
     int start = 0;
     int end = 0;
@@ -1142,15 +1102,12 @@ UniValue getaddresstxids(const UniValue& params, bool fHelp)
 // insightexplorer
 UniValue getspentinfo(const UniValue& params, bool fHelp)
 {
-    std::string disabledMsg = "";
-    if (!fExperimentalInsightExplorer) {
-        disabledMsg = experimentalDisabledHelpMsg("getspentinfo", {"insightexplorer"});
-    }
     if (fHelp || params.size() != 1 || !params[0].isObject())
         throw runtime_error(
             "getspentinfo {\"txid\": \"txidhex\", \"index\": n}\n"
             "\nReturns the txid and index where an output is spent.\n"
-            + disabledMsg +
+            "\nRequires that the spent index be enabled when starting zcashd (pass\n"
+            "-insightexplorer).\n"
             "\nArguments:\n"
             "{\n"
             "  \"txid\"   (string) The hex string of the txid\n"
@@ -1166,11 +1123,6 @@ UniValue getspentinfo(const UniValue& params, bool fHelp)
             + HelpExampleCli("getspentinfo", "'{\"txid\": \"33990288fb116981260be1de10b8c764f997674545ab14f9240f00346333b780\", \"index\": 4}'")
             + HelpExampleRpc("getspentinfo", "{\"txid\": \"33990288fb116981260be1de10b8c764f997674545ab14f9240f00346333b780\", \"index\": 4}")
         );
-
-    if (!fExperimentalInsightExplorer) {
-        throw JSONRPCError(RPC_MISC_ERROR, "Error: getspentinfo is disabled. "
-            "Run './zcash-cli help getspentinfo' for instructions on how to enable this feature.");
-    }
 
     UniValue txidValue = find_value(params[0].get_obj(), "txid");
     UniValue indexValue = find_value(params[0].get_obj(), "index");
