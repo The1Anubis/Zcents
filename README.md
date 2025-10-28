@@ -1,24 +1,29 @@
-Zcash 6.10.0
+Zcents 6.10.0
 <img align="right" width="120" height="80" src="doc/imgs/logo.png">
-===========
+=============
 
-What is Zcash?
+What is Zcents?
 --------------
 
-[Zcash](https://z.cash/) is HTTPS for money.
+[Zcents](https://z.cash/) is a variation of Zcash created for testing
+purposes. It builds upon the Zcash codebase and inherits its goals of
+providing HTTPS for money while offering an isolated environment for
+experimentation. This network is not intended for production use and is
+best suited for development, integration testing, and protocol research.
 
-Initially based on Bitcoin's design, Zcash has been developed from
-the Zerocash protocol to offer a far higher standard of privacy and
-anonymity. It uses a sophisticated zero-knowledge proving scheme to
-preserve confidentiality and hide the connections between shielded
-transactions. More technical details are available in our
-[Protocol Specification](https://zips.z.cash/protocol/protocol.pdf).
+Initially based on Bitcoin's design, Zcents (and Zcash) has been
+developed from the Zerocash protocol to offer a far higher standard of
+privacy and anonymity. It uses a sophisticated zero-knowledge proving
+scheme to preserve confidentiality and hide the connections between
+shielded transactions. More technical details are available in the
+upstream Zcash [Protocol Specification](https://zips.z.cash/protocol/protocol.pdf).
 
 ## The `zcashd` Full Node
 
-This repository hosts the `zcashd` software, a Zcash consensus node
-implementation. It downloads and stores the entire history of Zcash
-transactions. Depending on the speed of your computer and network
+This repository hosts the `zcashd` software, adapted as a Zcents
+consensus node implementation for testing. It downloads and stores the
+entire history of Zcents transactions. Depending on the speed of your
+computer and network
 connection, the synchronization process could take several days.
 
 <p align="center">
@@ -35,7 +40,7 @@ substantially.
 See important security warnings on the
 [Security Information page](https://z.cash/support/security/).
 
-**Zcash is experimental and a work in progress.** Use it at your own risk.
+**Zcents is experimental and a work in progress.** Use it at your own risk.
 
 ####  :ledger: Deprecation Policy
 
@@ -69,7 +74,7 @@ Participation in the Zcash project is subject to a
 
 ### Building
 
-Build Zcash along with most dependencies from source by running the following command:
+Build Zcents along with most dependencies from source by running the following command:
 
 ```
 ./zcutil/build.sh -j$(nproc)
