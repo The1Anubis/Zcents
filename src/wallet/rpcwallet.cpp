@@ -172,19 +172,16 @@ UniValue getnewaddress(const UniValue& params, bool fHelp)
     if (!EnsureWalletIsAvailable(fHelp))
         return NullUniValue;
 
-    if (!fEnableGetNewAddress || fHelp || params.size() > 1)
+    if (fHelp || params.size() > 1)
         throw runtime_error(
             "getnewaddress ( \"\" )\n"
-            + Deprecated(fEnableGetNewAddress,
-                         "getnewaddress",
-                         "Please use z_getnewaccount and z_getaddressforaccount instead.") +
             "\nReturns a new transparent Zcash address.\n"
             "Payments received by this API are visible on-chain and do not otherwise\n"
             "provide privacy protections; they should only be used in circumstances \n"
             "where it is necessary to interoperate with legacy Bitcoin infrastructure.\n"
 
             "\nArguments:\n"
-            "1. (dummy)       (string, optional) DEPRECATED. If provided, it MUST be set to the empty string \"\". Passing any other string will result in an error.\n"
+            "1. (dummy)       (string, optional) If provided, it MUST be set to the empty string \"\". Passing any other string will result in an error.\n"
 
             "\nResult:\n"
             "\"zcashaddress\"    (string) The new transparent Zcash address\n"
@@ -252,13 +249,9 @@ UniValue getrawchangeaddress(const UniValue& params, bool fHelp)
     if (!EnsureWalletIsAvailable(fHelp))
         return NullUniValue;
 
-    if (!fEnableGetRawChangeAddress || fHelp || params.size() > 1)
+    if (fHelp || params.size() > 1)
         throw runtime_error(
             "getrawchangeaddress\n"
-            + Deprecated(fEnableGetRawChangeAddress,
-                         "getrawchangeaddress",
-                         "Change addresses are a wallet-internal feature. Use a unified address\n"
-                         "for a dedicated change account instead.") +
             "\nReturns a new transparent Zcash address for receiving change.\n"
             "This is for use with raw transactions, NOT normal use. Additionally,\n"
             "the resulting address does not correspond to the \"change\" HD derivation\n"
@@ -2053,12 +2046,9 @@ UniValue keypoolrefill(const UniValue& params, bool fHelp)
     if (!EnsureWalletIsAvailable(fHelp))
         return NullUniValue;
 
-    if (!fEnableKeyPoolRefill || fHelp || params.size() > 1)
+    if (fHelp || params.size() > 1)
         throw runtime_error(
             "keypoolrefill ( newsize )\n"
-            + Deprecated(fEnableKeyPoolRefill,
-                         "keypoolrefill",
-                         "It will not be needed for Zallet.") +
             "\nFills the keypool associated with the legacy transparent value pool. This should only be\n"
             "used when interoperability with legacy Bitcoin infrastructure is required.\n"
             + HelpRequiringPassphrase() + "\n"
@@ -2491,13 +2481,9 @@ UniValue settxfee(const UniValue& params, bool fHelp)
     if (!EnsureWalletIsAvailable(fHelp))
         return NullUniValue;
 
-    if (!fEnableSetTxFee || fHelp || params.size() < 1 || params.size() > 1)
+    if (fHelp || params.size() < 1 || params.size() > 1)
         throw runtime_error(
             "settxfee amount\n"
-            + Deprecated(fEnableSetTxFee,
-                         "settxfee",
-                         "It is strongly recommended to use the default ZIP 317 fee, which is not\n"
-                         "expressible using settxfee.") +
             "\nSet the preferred transaction fee rate per 1000 bytes. This is only used by legacy transaction creation APIs (sendtoaddress, sendmany, and fundrawtransaction). Overwrites the paytxfee parameter.\n"
             "\nArguments:\n"
             "1. amount         (numeric, required) The transaction fee rate in " + CURRENCY_UNIT + " per 1000 bytes rounded to the nearest 0.00000001\n"
@@ -2955,13 +2941,9 @@ UniValue fundrawtransaction(const UniValue& params, bool fHelp)
     if (!EnsureWalletIsAvailable(fHelp))
         return NullUniValue;
 
-    if (!fEnableFundRawTransaction || fHelp || params.size() < 1 || params.size() > 2)
+    if (fHelp || params.size() < 1 || params.size() > 2)
         throw runtime_error(
             "fundrawtransaction \"hexstring\" includeWatching\n"
-            + Deprecated(fEnableFundRawTransaction,
-                         "fundrawtransaction",
-                         "Zallet will instead provide new RPC methods that operate on PCZTs:\n"
-                         "https://github.com/zcash/wallet/issues/99") +
             "\nAdd transparent inputs to a transaction until it has enough in value to meet its out value.\n"
             "This will not modify existing inputs, and will add one change output to the outputs.\n"
             "Note that inputs which were signed may need to be resigned after completion since in/outputs have been added.\n"
@@ -3196,12 +3178,9 @@ UniValue z_getnewaddress(const UniValue& params, bool fHelp)
 
     std::string defaultType = ADDR_TYPE_SAPLING;
 
-    if (!fEnableZGetNewAddress || fHelp || params.size() > 1)
+    if (fHelp || params.size() > 1)
         throw runtime_error(
             "z_getnewaddress ( type )\n"
-            + Deprecated(fEnableZGetNewAddress,
-                         "z_getnewaddress",
-                         "Please use z_getnewaccount and z_getaddressforaccount instead.") +
             "\nReturns a new shielded address for receiving payments.\n"
             "\nWith no arguments, this currently returns a Sapling address (but that\n"
             "should not be relied on).\n"
@@ -3512,12 +3491,9 @@ UniValue z_listaddresses(const UniValue& params, bool fHelp)
     if (!EnsureWalletIsAvailable(fHelp))
         return NullUniValue;
 
-    if (!fEnableZListAddresses || fHelp || params.size() > 1)
+    if (fHelp || params.size() > 1)
         throw runtime_error(
             "z_listaddresses ( includeWatchonly )\n"
-            + Deprecated(fEnableZListAddresses,
-                         "z_listaddresses",
-                         "Please use `listaddresses` instead.") +
             "\nReturns the list of shielded addresses belonging to the wallet.\n"
             "\nThis never returns Unified Addresses; see 'listaddresses' for them.\n"
             "\nArguments:\n"
@@ -3949,13 +3925,9 @@ UniValue z_getbalance(const UniValue& params, bool fHelp)
     if (!EnsureWalletIsAvailable(fHelp))
         return NullUniValue;
 
-    if (!fEnableZGetBalance || fHelp || params.size() == 0 || params.size() > 3)
+    if (fHelp || params.size() == 0 || params.size() > 3)
         throw runtime_error(
             "z_getbalance \"address\" ( minconf inZat )\n"
-            + Deprecated(fEnableZGetBalance,
-                         "z_getbalance",
-                         "Please use z_getbalanceforaccount, z_getbalanceforviewingkey, or getbalance (for legacy\n"
-                         "transparent balance) instead.") +
             "\nReturns the balance of a taddr or zaddr belonging to the node's wallet.\n"
             "\nCAUTION: If the wallet has only an incoming viewing key for this address, then spends cannot be"
             "\ndetected, and so the returned balance may be larger than the actual balance."
@@ -4246,12 +4218,9 @@ UniValue z_gettotalbalance(const UniValue& params, bool fHelp)
     if (!EnsureWalletIsAvailable(fHelp))
         return NullUniValue;
 
-    if (!fEnableZGetTotalBalance || fHelp || params.size() > 2)
+    if (fHelp || params.size() > 2)
         throw runtime_error(
             "z_gettotalbalance ( minconf includeWatchonly )\n"
-            + Deprecated(fEnableZGetTotalBalance,
-                         "z_gettotalbalance",
-                         "Please use z_getbalanceforaccount, or getbalance (for legacy transparent balance) instead.") +
             "\nReturn the total value of funds stored in the node's wallet.\n"
             "\nCAUTION: If the wallet contains any addresses for which it only has incoming viewing keys,"
             "\nthe returned private balance may be larger than the actual balance, because spends cannot"

@@ -25,20 +25,7 @@ static const int DEPRECATION_HEIGHT = APPROX_RELEASE_HEIGHT + ACTIVATION_TO_DEPR
 static const int DEPRECATION_WARN_LIMIT = 14 * 24 * EXPECTED_BLOCKS_PER_HOUR;
 
 //! Defaults for -allowdeprecated
-static const std::set<std::string> DEFAULT_ALLOW_DEPRECATED{{
-    // Node-level features
-    "createrawtransaction",
-    "signrawtransaction",
-    "getnetworkhashps",
-
-    // Wallet-level features
-#ifdef ENABLE_WALLET
-    "z_gettotalbalance",
-    "fundrawtransaction",
-    "keypoolrefill",
-    "settxfee",
-#endif
-}};
+static const std::set<std::string> DEFAULT_ALLOW_DEPRECATED{};
 static const std::set<std::string> DEFAULT_DENY_DEPRECATED{{
     // Node-level features
     "gbt_oldhashes",
@@ -47,11 +34,6 @@ static const std::set<std::string> DEFAULT_DENY_DEPRECATED{{
 
     // Wallet-level features
 #ifdef ENABLE_WALLET
-    "getnewaddress",
-    "getrawchangeaddress",
-    "z_getnewaddress",
-    "z_getbalance",
-    "z_listaddresses",
     "legacy_privacy",
     "wallettxvjoinsplit",
 #endif
@@ -61,21 +43,9 @@ static const std::set<std::string> DEFAULT_DENY_DEPRECATED{{
 extern bool fEnableGbtOldHashes;
 extern bool fEnableDeprecationInfoDeprecationHeight;
 extern bool fEnableAddrTypeField;
-extern bool fEnableGetNetworkHashPS;
-extern bool fEnableCreateRawTransaction;
-extern bool fEnableSignRawTransaction;
 #ifdef ENABLE_WALLET
-extern bool fEnableGetNewAddress;
-extern bool fEnableGetRawChangeAddress;
-extern bool fEnableZGetNewAddress;
-extern bool fEnableZGetBalance;
-extern bool fEnableZGetTotalBalance;
-extern bool fEnableZListAddresses;
 extern bool fEnableLegacyPrivacyStrategy;
 extern bool fEnableWalletTxVJoinSplit;
-extern bool fEnableFundRawTransaction;
-extern bool fEnableKeyPoolRefill;
-extern bool fEnableSetTxFee;
 #endif
 
 /**
@@ -108,10 +78,5 @@ std::optional<std::string> LoadAllowedDeprecatedFeatures();
  * CLI option.
  */
 std::string GetAllowableDeprecatedFeatures();
-
-/**
- * Returns a string to be included in the help text of a deprecated RPC method.
- */
-std::string Deprecated(bool enabled, std::string method, std::string instead);
 
 #endif // ZCASH_DEPRECATION_H

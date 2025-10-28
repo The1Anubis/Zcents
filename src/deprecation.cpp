@@ -14,21 +14,9 @@
 bool fEnableGbtOldHashes = true;
 bool fEnableDeprecationInfoDeprecationHeight = true;
 bool fEnableAddrTypeField = true;
-bool fEnableGetNetworkHashPS = true;
-bool fEnableCreateRawTransaction = true;
-bool fEnableSignRawTransaction = true;
 #ifdef ENABLE_WALLET
-bool fEnableGetNewAddress = true;
-bool fEnableGetRawChangeAddress = true;
-bool fEnableZGetNewAddress = true;
-bool fEnableZGetBalance = true;
-bool fEnableZGetTotalBalance = true;
-bool fEnableZListAddresses = true;
 bool fEnableLegacyPrivacyStrategy = true;
 bool fEnableWalletTxVJoinSplit = true;
-bool fEnableFundRawTransaction = true;
-bool fEnableKeyPoolRefill = true;
-bool fEnableSetTxFee = true;
 #endif
 
 static const std::string CLIENT_VERSION_STR = FormatVersion(CLIENT_VERSION);
@@ -108,12 +96,6 @@ std::optional<std::string> LoadAllowedDeprecatedFeatures() {
     fEnableAddrTypeField = allowdeprecated.count("addrtype") > 0;
 #ifdef ENABLE_WALLET
     fEnableLegacyPrivacyStrategy = allowdeprecated.count("legacy_privacy") > 0;
-    fEnableGetNewAddress = allowdeprecated.count("getnewaddress") > 0;
-    fEnableGetRawChangeAddress = allowdeprecated.count("getrawchangeaddress") > 0;
-    fEnableZGetNewAddress = allowdeprecated.count("z_getnewaddress") > 0;
-    fEnableZGetBalance = allowdeprecated.count("z_getbalance") > 0;
-    fEnableZGetTotalBalance = allowdeprecated.count("z_gettotalbalance") > 0;
-    fEnableZListAddresses = allowdeprecated.count("z_listaddresses") > 0;
     fEnableWalletTxVJoinSplit = allowdeprecated.count("wallettxvjoinsplit") > 0;
 #endif
 
@@ -129,18 +111,4 @@ std::string GetAllowableDeprecatedFeatures() {
         result += ", \"" + value + "\"";
     }
     return result;
-}
-
-std::string Deprecated(bool enabled, std::string method, std::string instead) {
-    auto status = enabled ? "DEPRECATED" : "DISABLED";
-    auto reenable = enabled
-            ? std::string("")
-            : (std::string("You can restart the node with `-allowdeprecated=") + method + "`\n"
-               "to re-enable this method during its deprecation period.\n");
-
-    return std::string("\n")
-           + method + " is " + status + " and will be removed in a future release.\n"
-           + instead + "\n"
-           + reenable
-           + "See https://zcash.github.io/zcash/user/deprecation.html for more information.\n";
 }
