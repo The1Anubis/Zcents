@@ -317,30 +317,14 @@ BOOST_AUTO_TEST_CASE(rpc_getnetworksolps)
 // These tests also ensure that src/rpc/client.cpp has the correct entries.
 BOOST_AUTO_TEST_CASE(rpc_insightexplorer)
 {
-    CheckRPCThrows("getaddressmempool \"a\"",
-        "Error: getaddressmempool is disabled. "
-        "Run './zcash-cli help getaddressmempool' for instructions on how to enable this feature.");
-    CheckRPCThrows("getaddressutxos \"a\"",
-        "Error: getaddressutxos is disabled. "
-        "Run './zcash-cli help getaddressutxos' for instructions on how to enable this feature.");
-    CheckRPCThrows("getaddressdeltas \"a\"",
-        "Error: getaddressdeltas is disabled. "
-        "Run './zcash-cli help getaddressdeltas' for instructions on how to enable this feature.");
-    CheckRPCThrows("getaddressbalance \"a\"",
-        "Error: getaddressbalance is disabled. "
-        "Run './zcash-cli help getaddressbalance' for instructions on how to enable this feature.");
-    CheckRPCThrows("getaddresstxids \"a\"",
-        "Error: getaddresstxids is disabled. "
-        "Run './zcash-cli help getaddresstxids' for instructions on how to enable this feature.");
-    CheckRPCThrows("getspentinfo {\"a\":1}",
-        "Error: getspentinfo is disabled. "
-        "Run './zcash-cli help getspentinfo' for instructions on how to enable this feature.");
-    CheckRPCThrows("getblockdeltas \"a\"",
-        "Error: getblockdeltas is disabled. "
-        "Run './zcash-cli help getblockdeltas' for instructions on how to enable this feature.");
-    CheckRPCThrows("getblockhashes 0 0",
-        "Error: getblockhashes is disabled. "
-        "Run './zcash-cli help getblockhashes' for instructions on how to enable this feature.");
+    CheckRPCThrows("getaddressmempool \"a\"", "Invalid address");
+    CheckRPCThrows("getaddressutxos \"a\"", "Invalid address");
+    CheckRPCThrows("getaddressdeltas \"a\"", "Invalid address");
+    CheckRPCThrows("getaddressbalance \"a\"", "Invalid address");
+    CheckRPCThrows("getaddresstxids \"a\"", "Invalid address");
+    CheckRPCThrows("getspentinfo {\"a\":1}", "Invalid txid, must be a string");
+    CheckRPCThrows("getblockdeltas \"a\"", "Block not found");
+    CheckRPCThrows("getblockhashes 0 0", "No information available for block hashes");
 
     fExperimentalInsightExplorer = true;
     // During startup of the real system, fExperimentalInsightExplorer ("-insightexplorer")
