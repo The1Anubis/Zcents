@@ -106,6 +106,9 @@ unsigned int CalculateNextWorkRequired(arith_uint256 bnAvg,
 
 bool CheckEquihashSolution(const CBlockHeader *pblock, const Consensus::Params& params)
 {
+    if (pblock->GetHash() == params.hashGenesisBlock) {
+        return true;
+    }
     unsigned int n = params.nEquihashN;
     unsigned int k = params.nEquihashK;
 
@@ -124,6 +127,9 @@ bool CheckEquihashSolution(const CBlockHeader *pblock, const Consensus::Params& 
 
 bool CheckProofOfWork(uint256 hash, unsigned int nBits, const Consensus::Params& params)
 {
+    if (hash == params.hashGenesisBlock) {
+        return true;
+    }
     bool fNegative;
     bool fOverflow;
     arith_uint256 bnTarget;
