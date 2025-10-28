@@ -14,7 +14,7 @@
 
 BOOST_FIXTURE_TEST_SUITE(main_tests, TestingSetup)
 
-const CAmount INITIAL_SUBSIDY = 12.5 * COIN;
+const CAmount INITIAL_SUBSIDY = 100 * COIN;
 
 static int GetTotalHalvings(const Consensus::Params& consensusParams) {
     // This assumes that BLOSSOM_POW_TARGET_SPACING_RATIO == 2
@@ -85,7 +85,7 @@ BOOST_AUTO_TEST_CASE(subsidy_limit_test)
         nSum += nSubsidy;
         BOOST_CHECK(MoneyRange(nSum));
     }
-    BOOST_CHECK_EQUAL(nSum, 12500000000000ULL);
+    BOOST_CHECK_EQUAL(nSum, 100000000000000ULL);
 
     // Regular mining
     CAmount nSubsidy;
@@ -97,14 +97,7 @@ BOOST_AUTO_TEST_CASE(subsidy_limit_test)
         ++nHeight;
     } while (nSubsidy > 0);
 
-    // Changing the block interval from 10 to 2.5 minutes causes truncation
-    // effects to occur earlier (from the 9th halving interval instead of the
-    // 11th), decreasing the total monetary supply by 0.0693 ZEC.
-    // BOOST_CHECK_EQUAL(nSum, 2099999997690000ULL);
-    // Reducing the interval further to 1.25 minutes has a similar effect,
-    // decreasing the total monetary supply by another 0.09240 ZEC.
-    // BOOST_CHECK_EQUAL(nSum, 2099999990760000ULL);
-    BOOST_CHECK_EQUAL(nSum, 2099999981520000LL);
+    BOOST_CHECK_EQUAL(nSum, 8409599990749440LL);
 }
 
 bool ReturnFalse() { return false; }

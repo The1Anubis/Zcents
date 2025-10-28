@@ -363,7 +363,7 @@ namespace Consensus {
 
     CAmount Params::GetBlockSubsidy(int nHeight) const
     {
-        CAmount nSubsidy = 12.5 * COIN;
+        CAmount nSubsidy = 100 * COIN;
 
         // Mining slow start
         // The subsidy is ramped up linearly, skipping the middle payout of
@@ -395,7 +395,7 @@ namespace Consensus {
         if (this->NetworkUpgradeActive(nHeight, Consensus::UPGRADE_BLOSSOM)) {
             return (nSubsidy / Consensus::BLOSSOM_POW_TARGET_SPACING_RATIO) >> halvings;
         } else {
-            // Subsidy is cut in half every 840,000 blocks which will occur approximately every 4 years.
+        // Subsidy is cut in half every 420,480 blocks which will occur approximately every 2 years.
             return nSubsidy >> halvings;
         }
     }
