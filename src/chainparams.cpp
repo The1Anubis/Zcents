@@ -149,21 +149,21 @@ public:
 
         consensus.nFundingPeriodLength = consensus.nPostBlossomSubsidyHalvingInterval / 48;
 
-        // guarantees the first 2 characters, when base58 encoded, are "t1"
-        keyConstants.base58Prefixes[PUBKEY_ADDRESS]     = {0x1C,0xB8};
-        // guarantees the first 2 characters, when base58 encoded, are "t3"
-        keyConstants.base58Prefixes[SCRIPT_ADDRESS]     = {0x1C,0xBD};
-        // the first character, when base58 encoded, is "5" or "K" or "L" (as in Bitcoin)
-        keyConstants.base58Prefixes[SECRET_KEY]         = {0x80};
+        // guarantees the first 2 characters, when base58 encoded, are "Zc"
+        keyConstants.base58Prefixes[PUBKEY_ADDRESS]     = {0x12,0x5C};
+        // guarantees the first 2 characters, when base58 encoded, are "Zs"
+        keyConstants.base58Prefixes[SCRIPT_ADDRESS]     = {0x12,0x81};
+        // guarantees the first character, when base58 encoded, is "S"
+        keyConstants.base58Prefixes[SECRET_KEY]         = {0x0D};
         // do not rely on these BIP32 prefixes; they are not specified and may change
-        keyConstants.base58Prefixes[EXT_PUBLIC_KEY]     = {0x04,0x88,0xB2,0x1E};
-        keyConstants.base58Prefixes[EXT_SECRET_KEY]     = {0x04,0x88,0xAD,0xE4};
-        // guarantees the first 2 characters, when base58 encoded, are "zc"
-        keyConstants.base58Prefixes[ZCPAYMENT_ADDRESS]  = {0x16,0x9A};
-        // guarantees the first 4 characters, when base58 encoded, are "ZiVK"
-        keyConstants.base58Prefixes[ZCVIEWING_KEY]      = {0xA8,0xAB,0xD3};
-        // guarantees the first 2 characters, when base58 encoded, are "SK"
-        keyConstants.base58Prefixes[ZCSPENDING_KEY]     = {0xAB,0x36};
+        keyConstants.base58Prefixes[EXT_PUBLIC_KEY]     = {0x03,0x5A,0x3C,0x2F};
+        keyConstants.base58Prefixes[EXT_SECRET_KEY]     = {0x03,0x5A,0x31,0x2B};
+        // guarantees the first 2 characters, when base58 encoded, are "Za"
+        keyConstants.base58Prefixes[ZCPAYMENT_ADDRESS]  = {0x0C,0xC8};
+        // guarantees the first 4 characters, when base58 encoded, are "ZViZ"
+        keyConstants.base58Prefixes[ZCVIEWING_KEY]      = {0x02,0xE3,0x78};
+        // guarantees the first 2 characters, when base58 encoded, are "ZS"
+        keyConstants.base58Prefixes[ZCSPENDING_KEY]     = {0x03,0xC8};
 
         keyConstants.bech32HRPs[SAPLING_PAYMENT_ADDRESS]      = "zs";
         keyConstants.bech32HRPs[SAPLING_FULL_VIEWING_KEY]     = "zviews";
@@ -518,21 +518,21 @@ public:
 
         consensus.nFundingPeriodLength = consensus.nPostBlossomSubsidyHalvingInterval / 48;
 
-        // guarantees the first 2 characters, when base58 encoded, are "tm"
-        keyConstants.base58Prefixes[PUBKEY_ADDRESS]     = {0x1D,0x25};
-        // guarantees the first 2 characters, when base58 encoded, are "t2"
-        keyConstants.base58Prefixes[SCRIPT_ADDRESS]     = {0x1C,0xBA};
-        // the first character, when base58 encoded, is "9" or "c" (as in Bitcoin)
-        keyConstants.base58Prefixes[SECRET_KEY]         = {0xEF};
+        // guarantees the first 2 characters, when base58 encoded, are "Rc"
+        keyConstants.base58Prefixes[PUBKEY_ADDRESS]     = {0x0D,0xDB};
+        // guarantees the first 2 characters, when base58 encoded, are "Rs"
+        keyConstants.base58Prefixes[SCRIPT_ADDRESS]     = {0x0E,0x00};
+        // guarantees the first character, when base58 encoded, is "2"
+        keyConstants.base58Prefixes[SECRET_KEY]         = {0x01};
         // do not rely on these BIP32 prefixes; they are not specified and may change
-        keyConstants.base58Prefixes[EXT_PUBLIC_KEY]     = {0x04,0x35,0x87,0xCF};
-        keyConstants.base58Prefixes[EXT_SECRET_KEY]     = {0x04,0x35,0x83,0x94};
-        // guarantees the first 2 characters, when base58 encoded, are "zt"
-        keyConstants.base58Prefixes[ZCPAYMENT_ADDRESS]  = {0x16,0xB6};
-        // guarantees the first 4 characters, when base58 encoded, are "ZiVt"
-        keyConstants.base58Prefixes[ZCVIEWING_KEY]      = {0xA8,0xAC,0x0C};
-        // guarantees the first 2 characters, when base58 encoded, are "ST"
-        keyConstants.base58Prefixes[ZCSPENDING_KEY]     = {0xAC,0x08};
+        keyConstants.base58Prefixes[EXT_PUBLIC_KEY]     = {0x05,0x62,0xA3,0x1F};
+        keyConstants.base58Prefixes[EXT_SECRET_KEY]     = {0x05,0x62,0x98,0x19};
+        // guarantees the first 2 characters, when base58 encoded, are "ta"
+        keyConstants.base58Prefixes[ZCPAYMENT_ADDRESS]  = {0x14,0x3C};
+        // guarantees the first 4 characters, when base58 encoded, are "tViA"
+        keyConstants.base58Prefixes[ZCVIEWING_KEY]      = {0x04,0x93,0xD6};
+        // guarantees the first 2 characters, when base58 encoded, are "tS"
+        keyConstants.base58Prefixes[ZCSPENDING_KEY]     = {0x05,0xFF};
 
         keyConstants.bech32HRPs[SAPLING_PAYMENT_ADDRESS]      = "ztestsapling";
         keyConstants.bech32HRPs[SAPLING_FULL_VIEWING_KEY]     = "zviewtestsapling";
@@ -843,15 +843,15 @@ public:
         // Defined funding streams can be enabled with node config flags.
 
         // These prefixes are the same as the testnet prefixes
-        keyConstants.base58Prefixes[PUBKEY_ADDRESS]     = {0x1D,0x25};
-        keyConstants.base58Prefixes[SCRIPT_ADDRESS]     = {0x1C,0xBA};
-        keyConstants.base58Prefixes[SECRET_KEY]         = {0xEF};
+        keyConstants.base58Prefixes[PUBKEY_ADDRESS]     = {0x0D,0xDB};
+        keyConstants.base58Prefixes[SCRIPT_ADDRESS]     = {0x0E,0x00};
+        keyConstants.base58Prefixes[SECRET_KEY]         = {0x01};
         // do not rely on these BIP32 prefixes; they are not specified and may change
-        keyConstants.base58Prefixes[EXT_PUBLIC_KEY]     = {0x04,0x35,0x87,0xCF};
-        keyConstants.base58Prefixes[EXT_SECRET_KEY]     = {0x04,0x35,0x83,0x94};
-        keyConstants.base58Prefixes[ZCPAYMENT_ADDRESS]  = {0x16,0xB6};
-        keyConstants.base58Prefixes[ZCVIEWING_KEY]      = {0xA8,0xAC,0x0C};
-        keyConstants.base58Prefixes[ZCSPENDING_KEY]     = {0xAC,0x08};
+        keyConstants.base58Prefixes[EXT_PUBLIC_KEY]     = {0x05,0x62,0xA3,0x1F};
+        keyConstants.base58Prefixes[EXT_SECRET_KEY]     = {0x05,0x62,0x98,0x19};
+        keyConstants.base58Prefixes[ZCPAYMENT_ADDRESS]  = {0x14,0x3C};
+        keyConstants.base58Prefixes[ZCVIEWING_KEY]      = {0x04,0x93,0xD6};
+        keyConstants.base58Prefixes[ZCSPENDING_KEY]     = {0x05,0xFF};
 
         keyConstants.bech32HRPs[SAPLING_PAYMENT_ADDRESS]      = "zregtestsapling";
         keyConstants.bech32HRPs[SAPLING_FULL_VIEWING_KEY]     = "zviewregtestsapling";
