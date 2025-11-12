@@ -76,7 +76,7 @@ bool AppInit(int argc, char* argv[])
     // Process help and version before taking care about datadir
     if (mapArgs.count("-?") || mapArgs.count("-h") ||  mapArgs.count("-help") || mapArgs.count("-version"))
     {
-        std::string strUsage = _("Zcash Daemon") + " " + _("version") + " " + FormatFullVersion() + "\n" + PrivacyInfo();
+        std::string strUsage = _("Zcents Daemon") + " " + _("version") + " " + FormatFullVersion() + "\n" + PrivacyInfo();
 
         if (mapArgs.count("-version"))
         {
@@ -85,7 +85,7 @@ bool AppInit(int argc, char* argv[])
         else
         {
             strUsage += "\n" + _("Usage:") + "\n" +
-                  "  zcashd [options]                     " + _("Start Zcash Daemon") + "\n";
+                  "  zcashd [options]                     " + _("Start Zcents Daemon") + "\n";
 
             strUsage += "\n" + HelpMessage(HMM_BITCOIND);
         }
@@ -116,12 +116,12 @@ bool AppInit(int argc, char* argv[])
                    "\n"
                    "You can look at the example configuration file for suggestions of default\n"
                    "options that you may want to change. It should be in one of these locations,\n"
-                   "depending on how you installed Zcash:\n") +
+                   "depending on how you installed Zcents:\n") +
                  _("- Source code:  %s%s\n"
                    "- .deb package: %s%s\n")).c_str(),
                 GetConfigFile(confFilename).string().c_str(),
                 "contrib/debian/examples/", confFilename.c_str(),
-                "/usr/share/doc/zcash/examples/", confFilename.c_str());
+                "/usr/share/doc/zcents/examples/", confFilename.c_str());
             return false;
         } catch (const std::exception& e) {
             fprintf(stderr,"Error reading configuration file: %s\n", e.what());
@@ -193,7 +193,7 @@ bool AppInit(int argc, char* argv[])
         fDaemon = GetBoolArg("-daemon", false);
         if (fDaemon)
         {
-            fprintf(stdout, "Zcash server starting\n");
+            fprintf(stdout, "Zcents server starting\n");
 
             // Daemonize
             pid_t pid = fork();

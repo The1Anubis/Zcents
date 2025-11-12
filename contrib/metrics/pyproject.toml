@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "zcash-metrics"
 version = "0.1.0"
-description = "Zcash Metrics"
+description = "Zcents Metrics"
 authors = [
     "Jack Grigg <jack@electriccoin.co>",
     "Daira Hopwood <daira@jacaranda.org>",

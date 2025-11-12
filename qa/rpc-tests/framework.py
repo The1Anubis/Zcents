@@ -33,7 +33,7 @@ class FrameworkTest (BitcoinTestFramework):
     def run_test (self):
 
         # Test the check_node_log utility function
-        string_to_find = "Zcash version"
+        string_to_find = "Zcents version"
         check_node_log(self, 1, string_to_find)
 
         # Node 1 was stopped to check the logs, need to be restarted
