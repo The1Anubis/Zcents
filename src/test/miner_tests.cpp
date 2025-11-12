@@ -314,7 +314,6 @@ BOOST_AUTO_TEST_CASE(CreateNewBlock_validity)
     assert(nblocks < chainparams.GetConsensus().SubsidySlowStartShift());
 
     auto MinerSubsidy = [](int height) { return height*50000; };
-    auto FoundersReward = [](int height) { return height*12500; };
 
     std::vector<CTransaction*> txFirst;
     auto CoinbaseTx = [&](int height) {
@@ -339,7 +338,6 @@ BOOST_AUTO_TEST_CASE(CreateNewBlock_validity)
         txCoinbase.vin[0].scriptSig = CScript() << (chainActive.Height()+1) << OP_0;
         txCoinbase.vout[0].scriptPubKey = CScript();
         txCoinbase.vout[0].nValue = MinerSubsidy(height);
-        txCoinbase.vout[1].nValue = FoundersReward(height);
         pblock->vtx[0] = CTransaction(txCoinbase);
         txFirst.push_back(new CTransaction(pblock->vtx[0]));
         pblock->hashMerkleRoot = BlockMerkleRoot(*pblock);

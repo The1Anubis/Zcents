@@ -5189,34 +5189,8 @@ bool ContextualCheckBlock(
         }
     }
 
-    if (consensusParams.NetworkUpgradeActive(nHeight, Consensus::UPGRADE_CANOPY)) {
-        // Funding streams are checked inside ContextualCheckTransaction.
-        // This empty conditional branch exists to enforce this ZIP 207 consensus rule:
-        //
-        //     Once the Canopy network upgrade activates, the existing consensus rule for
-        //     payment of the Founders' Reward is no longer active.
-    } else if ((nHeight > 0) && (nHeight <= consensusParams.GetLastFoundersRewardBlockHeight(nHeight))) {
-        // Coinbase transaction must include an output sending 20% of
-        // the block subsidy to a Founders' Reward script, until the last Founders'
-        // Reward block is reached, with exception of the genesis block.
-        // The last Founders' Reward block is defined as the block just before the
-        // first subsidy halving block, which occurs at halving_interval + slow_start_shift.
-        bool found = false;
-
-        for (const CTxOut& output : block.vtx[0].vout) {
-            if (output.scriptPubKey == chainparams.GetFoundersRewardScriptAtHeight(nHeight)) {
-                if (output.nValue == (consensusParams.GetBlockSubsidy(nHeight) / 5)) {
-                    found = true;
-                    break;
-                }
-            }
-        }
-
-        if (!found) {
-            return state.DoS(100, error("%s: founders reward missing", __func__),
-                             REJECT_INVALID, "cb-no-founders-reward");
-        }
-    }
+    // Founders' Reward and associated funding streams have been disabled, so there are no
+    // additional consensus checks to perform here.
 
     return true;
 }

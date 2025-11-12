@@ -117,57 +117,8 @@ public:
     CAmount SetFoundersRewardAndGetMinerValue(sapling::Builder& saplingBuilder) const {
         const auto& consensus = chainparams.GetConsensus();
         const auto block_subsidy = consensus.GetBlockSubsidy(nHeight);
-        auto miner_reward = block_subsidy; // founders' reward or funding stream amounts will be subtracted below
+        auto miner_reward = block_subsidy;
 
-        if (nHeight > 0) {
-            if (chainparams.GetConsensus().NetworkUpgradeActive(nHeight, Consensus::UPGRADE_CANOPY)) {
-                LogPrint("pow", "%s: Constructing funding stream outputs for height %d", __func__, nHeight);
-                for (const auto& [fsinfo, fs] : consensus.GetActiveFundingStreams(nHeight)) {
-                    const auto amount = fsinfo.Value(block_subsidy);
-                    miner_reward -= amount;
-
-                    examine(fs.Recipient(consensus, nHeight), match {
-                        [&](const libzcash::SaplingPaymentAddress& pa) {
-                            LogPrint("pow", "%s: Adding Sapling funding stream output of value %d", __func__, amount);
-                            saplingBuilder.add_recipient(
-                                {},
-                                pa.GetRawBytes(),
-                                amount,
-                                libzcash::Memo::ToBytes(std::nullopt));
-                        },
-                        [&](const CScript& scriptPubKey) {
-                            LogPrint("pow", "%s: Adding transparent funding stream output of value %d", __func__, amount);
-                            mtx.vout.emplace_back(amount, scriptPubKey);
-                        },
-                        [&](const Consensus::Lockbox& lockbox) {
-                            LogPrint("pow", "%s: Noting lockbox output of value %d", __func__, amount);
-                        }
-                    });
-                }
-            } else if (nHeight <= chainparams.GetConsensus().GetLastFoundersRewardBlockHeight(nHeight)) {
-                // Founders reward is 20% of the block subsidy
-                const auto vFoundersReward = miner_reward / 5;
-                // Take some reward away from us
-                miner_reward -= vFoundersReward;
-                // And give it to the founders
-                mtx.vout.push_back(CTxOut(vFoundersReward, chainparams.GetFoundersRewardScriptAtHeight(nHeight)));
-            } else {
-                // Founders reward ends without replacement if Canopy is not activated by the
-                // last Founders' Reward block height + 1.
-            }
-
-            if (chainparams.GetConsensus().NetworkUpgradeActive(nHeight, Consensus::UPGRADE_NU6_1)) {
-                auto disbursements = consensus.GetLockboxDisbursementsForHeight(nHeight);
-                if (!disbursements.empty()) {
-                    LogPrint("pow", "%s: Constructing one-time lockbox disbursement outputs for height %d", __func__, nHeight);
-                    for (const auto& disbursement : disbursements) {
-                        LogPrint("pow", "%s: Adding transparent lockbox disbursement output of value %d",
-                                 __func__, disbursement.GetAmount());
-                        mtx.vout.emplace_back(disbursement.GetAmount(), disbursement.GetRecipient());
-                    }
-                }
-            }
-        }
         LogPrint("pow", "%s: Miner reward at height %d is %d", __func__, nHeight, miner_reward);
 
         return miner_reward + nFees;

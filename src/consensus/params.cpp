@@ -173,7 +173,9 @@ namespace Consensus {
     }
 
     int Params::GetLastFoundersRewardBlockHeight(int nHeight) const {
-        return HalvingHeight(nHeight, 1) - 1;
+        // Founder and developer rewards have been disabled. Returning 0 here ensures
+        // that consensus rules never expect a founders' reward output.
+        return 0;
     }
 
     int Params::FundingPeriodIndex(int fundingStreamStartHeight, int nHeight) const {
@@ -402,23 +404,9 @@ namespace Consensus {
 
     std::vector<std::pair<FSInfo, FundingStream>> Params::GetActiveFundingStreams(int nHeight) const
     {
-        std::vector<std::pair<FSInfo, FundingStream>> activeStreams;
-
-        // Funding streams are disabled if Canopy is not active.
-        if (NetworkUpgradeActive(nHeight, Consensus::UPGRADE_CANOPY)) {
-            for (uint32_t idx = Consensus::FIRST_FUNDING_STREAM; idx < Consensus::MAX_FUNDING_STREAMS; idx++) {
-                // The following indexed access is safe as Consensus::MAX_FUNDING_STREAMS is used
-                // in the definition of vFundingStreams.
-                auto fs = vFundingStreams[idx];
-
-                // Funding period is [startHeight, endHeight).
-                if (fs && nHeight >= fs.value().GetStartHeight() && nHeight < fs.value().GetEndHeight()) {
-                    activeStreams.push_back(std::make_pair(FundingStreamInfo[idx], fs.value()));
-                }
-            }
-        }
-
-        return activeStreams;
+        // All direct funding streams have been disabled. Return an empty list so callers
+        // do not expect any additional outputs to be created.
+        return {};
     };
 
     std::set<FundingStreamElement> Params::GetActiveFundingStreamElements(int nHeight) const
@@ -430,39 +418,15 @@ namespace Consensus {
         int nHeight,
         CAmount blockSubsidy) const
     {
-        std::set<std::pair<FundingStreamRecipient, CAmount>> requiredElements;
-
-        // Funding streams are disabled if Canopy is not active.
-        if (NetworkUpgradeActive(nHeight, Consensus::UPGRADE_CANOPY)) {
-            for (const auto& [fsinfo, fs] : GetActiveFundingStreams(nHeight)) {
-                requiredElements.insert(std::make_pair(
-                    fs.Recipient(*this, nHeight),
-                    fsinfo.Value(blockSubsidy)));
-            }
-        }
-
-        return requiredElements;
+        // With funding streams disabled there are no required elements to enforce.
+        return {};
     };
 
     std::vector<OnetimeLockboxDisbursement> Params::GetLockboxDisbursementsForHeight(int nHeight) const
     {
-        std::vector<OnetimeLockboxDisbursement> disbursements;
-
-        // Disbursements are disabled if NU6.1 is not active.
-        if (NetworkUpgradeActive(nHeight, Consensus::UPGRADE_NU6_1)) {
-            for (uint32_t idx = Consensus::FIRST_ONETIME_LOCKBOX_DISBURSEMENT; idx < Consensus::MAX_ONETIME_LOCKBOX_DISBURSEMENTS; idx++) {
-                // The following indexed access is safe as
-                // Consensus::MAX_ONETIME_LOCKBOX_DISBURSEMENTS is used
-                // in the definition of vOnetimeLockboxDisbursements.
-                auto ld = vOnetimeLockboxDisbursements[idx];
-
-                if (ld && GetActivationHeight(ld.value().GetUpgrade()) == nHeight) {
-                    disbursements.push_back(ld.value());
-                }
-            }
-        }
-
-        return disbursements;
+        // Disable one-time lockbox disbursements so the entire block subsidy is paid
+        // to the miner.
+        return {};
     };
 
     FundingStreamRecipient FundingStream::Recipient(const Consensus::Params& params, int nHeight) const
