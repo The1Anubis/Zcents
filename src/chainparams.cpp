@@ -776,6 +776,9 @@ public:
 
         // Founders reward disabled for Zcents genesis.
         vFoundersRewardAddress.clear();
+    }
+};
+
 static CRegTestParams regTestParams;
 
 static const CChainParams* pCurrentParams = nullptr;
