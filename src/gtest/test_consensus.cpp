@@ -48,7 +48,7 @@ void ZIP215Check(
     ed25519::Signature signature;
     std::copy(sig_hex.begin(), sig_hex.end(), signature.bytes.begin());
 
-    std::string msg("Zcash");
+    std::string msg("Zcents");
 
     int expected_legacy = 0;
 

@@ -16,8 +16,8 @@ BEGIN
     BEGIN
         BLOCK "040904E4" // U.S. English - multilingual (hex)
         BEGIN
-            VALUE "CompanyName",        "Zcash"
-            VALUE "FileDescription",    "zcash-tx (CLI Zcash transaction editor utility)"
+            VALUE "CompanyName",        "Zcents"
+            VALUE "FileDescription",    "zcash-tx (CLI Zcents transaction editor utility)"
             VALUE "FileVersion",        VER_FILEVERSION_STR
             VALUE "InternalName",       "zcash-tx"
             VALUE "LegalCopyright",     COPYRIGHT_STR

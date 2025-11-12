@@ -92,12 +92,12 @@ void ThreadSendAlert()
     //  4000 or higher will put the RPC into safe mode
     alert.nPriority     = 4000;
     alert.strComment    = "";
-    alert.strStatusBar  = "Your client is out of date and incompatible with the Heartwood network upgrade. Please update to a recent version of Zcash (3.0.0 or later).";
+    alert.strStatusBar  = "Your client is out of date and incompatible with the Heartwood network upgrade. Please update to a recent version of Zcents (3.0.0 or later).";
     alert.strRPCError   = alert.strStatusBar;
 
     // Set specific client version/versions here. If setSubVer is empty, no filtering on subver is done:
-    // alert.setSubVer.insert(std::string("/MagicBean:0.7.2/"));
-    const std::vector<std::string> useragents = {}; //{"MagicBean", "BeanStalk", "AppleSeed", "EleosZcash"};
+    // alert.setSubVer.insert(std::string("/Zcents:0.7.2/"));
+    const std::vector<std::string> useragents = {}; //{"Zcents", "BeanStalk", "AppleSeed", "EleosZcash"};
 
     for (const std::string& useragent : useragents) {
     }

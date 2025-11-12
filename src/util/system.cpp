@@ -208,7 +208,7 @@ static std::string FormatException(const std::exception* pex, const char* pszThr
     char pszModule[MAX_PATH] = "";
     GetModuleFileNameA(NULL, pszModule, sizeof(pszModule));
 #else
-    const char* pszModule = "Zcash";
+    const char* pszModule = "Zcents";
 #endif
     if (pex)
         return strprintf(
@@ -232,7 +232,7 @@ fs::path GetDefaultDataDir()
     // Unix: ~/.zcash
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "Zcash";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "Zcents";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -244,7 +244,7 @@ fs::path GetDefaultDataDir()
     // Mac
     pathRet /= "Library/Application Support";
     TryCreateDirectory(pathRet);
-    return pathRet / "Zcash";
+    return pathRet / "Zcents";
 #else
     // Unix
     return pathRet / ".zcash";
@@ -267,7 +267,7 @@ static fs::path ZC_GetDefaultBaseParamsDir()
     // Unix: ~/.zcash-params
 #ifdef WIN32
     // Windows
-    return GetSpecialFolderPath(CSIDL_APPDATA) / "ZcashParams";
+    return GetSpecialFolderPath(CSIDL_APPDATA) / "ZcentsParams";
 #else
     fs::path pathRet;
     char* pszHome = getenv("HOME");
@@ -279,7 +279,7 @@ static fs::path ZC_GetDefaultBaseParamsDir()
     // Mac
     pathRet /= "Library/Application Support";
     TryCreateDirectory(pathRet);
-    return pathRet / "ZcashParams";
+    return pathRet / "ZcentsParams";
 #else
     // Unix
     return pathRet / ".zcash-params";
