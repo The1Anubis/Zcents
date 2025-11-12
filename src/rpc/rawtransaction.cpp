@@ -36,6 +36,22 @@
 
 using namespace std;
 
+// Compute an approximate "release height" from known network upgrade activations.
+// This is a safe fallback for forks where APPROX_RELEASE_HEIGHT is not defined.
+static int ApproxReleaseHeight()
+{
+    const CChainParams& params = Params();
+    const auto& consensus = params.GetConsensus();
+
+    int h = 1; // never clamp to 0
+    // Walk all known upgrades and take the max activation height that is set (>0)
+    for (int i = 0; i < (int)Consensus::MAX_NETWORK_UPGRADES; ++i) {
+        int a = consensus.vUpgrades[i].nActivationHeight;
+        if (a > h) h = a;
+    }
+    return h;
+}
+
 void ScriptPubKeyToJSON(const CScript& scriptPubKey, UniValue& out, bool fIncludeHex)
 {
     txnouttype type;
